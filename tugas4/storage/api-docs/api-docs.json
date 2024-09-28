@@ -1,0 +1,656 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Documentation My API",
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "User Login",
+                "description": "Authenticate user and return a token.",
+                "operationId": "userLogin",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "user@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Login berhasil"
+                                        },
+                                        "token": {
+                                            "type": "string",
+                                            "example": "your_access_token"
+                                        },
+                                        "user": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "John Doe"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "user@example.com"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The provided credentials are incorrect."
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "email": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The provided credentials are incorrect."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "User Logout",
+                "description": "Revoke the token for the authenticated user.",
+                "operationId": "userLogout",
+                "responses": {
+                    "200": {
+                        "description": "Logout successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Logout berhasil"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "User Registration",
+                "description": "Register a new user.",
+                "operationId": "userRegister",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nama",
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "nama": {
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "johndoe@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password1234"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Registration successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Register berhasil"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "nama": {
+                                                    "type": "string",
+                                                    "example": "John Doe"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "johndoe@example.com"
+                                                },
+                                                "level": {
+                                                    "type": "string",
+                                                    "example": "pengunjung"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/barang": {
+            "get": {
+                "tags": [
+                    "Barang"
+                ],
+                "summary": "Get List of Barang",
+                "description": "Retrieve all barang with pagination",
+                "operationId": "barangIndex",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "default": {
+                        "description": "Unexpected error"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Barang"
+                ],
+                "summary": "Create new Barang",
+                "description": "Create new barang with required data",
+                "operationId": "barangStore",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "kode_barang",
+                                    "nama_barang",
+                                    "id_kategori",
+                                    "harga",
+                                    "jumlah"
+                                ],
+                                "properties": {
+                                    "kode_barang": {
+                                        "type": "string"
+                                    },
+                                    "nama_barang": {
+                                        "type": "string"
+                                    },
+                                    "id_kategori": {
+                                        "type": "integer"
+                                    },
+                                    "harga": {
+                                        "type": "number"
+                                    },
+                                    "jumlah": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Barang successfully created"
+                    },
+                    "default": {
+                        "description": "Unexpected error"
+                    }
+                }
+            }
+        },
+        "/api/barang/{id}": {
+            "get": {
+                "tags": [
+                    "Barang"
+                ],
+                "summary": "Get Barang by ID",
+                "description": "Retrieve specific barang by its ID",
+                "operationId": "barangSingle",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the Barang",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Barang not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Barang"
+                ],
+                "summary": "Update Barang",
+                "description": "Update barang by its ID",
+                "operationId": "barangUpdate",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the Barang",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "kode_barang",
+                                    "nama_barang",
+                                    "id_kategori",
+                                    "harga",
+                                    "jumlah"
+                                ],
+                                "properties": {
+                                    "kode_barang": {
+                                        "type": "string"
+                                    },
+                                    "nama_barang": {
+                                        "type": "string"
+                                    },
+                                    "id_kategori": {
+                                        "type": "integer"
+                                    },
+                                    "harga": {
+                                        "type": "number"
+                                    },
+                                    "jumlah": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Barang successfully updated"
+                    },
+                    "404": {
+                        "description": "Barang not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Barang"
+                ],
+                "summary": "Delete Barang",
+                "description": "Delete barang by its ID",
+                "operationId": "barangDelete",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the Barang",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Barang successfully deleted"
+                    },
+                    "404": {
+                        "description": "Barang not found"
+                    }
+                }
+            }
+        },
+        "/api/barang/search": {
+            "get": {
+                "tags": [
+                    "Barang"
+                ],
+                "summary": "Search Barang",
+                "description": "Search barang by keyword in nama_barang",
+                "operationId": "barangSearch",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Keyword to search for barang",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Barang search result"
+                    },
+                    "default": {
+                        "description": "Unexpected error"
+                    }
+                }
+            }
+        },
+        "/api/kategori": {
+            "get": {
+                "tags": [
+                    "Kategori"
+                ],
+                "summary": "Get List of Kategori",
+                "description": "Retrieve all kategori with pagination",
+                "operationId": "kategoriIndex",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "default": {
+                        "description": "Unexpected error"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Kategori"
+                ],
+                "summary": "Create new Kategori",
+                "description": "Create new kategori with required data",
+                "operationId": "kategoriStore",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nama_kategori"
+                                ],
+                                "properties": {
+                                    "nama_kategori": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Kategori successfully created"
+                    },
+                    "default": {
+                        "description": "Unexpected error"
+                    }
+                }
+            }
+        },
+        "/api/kategori/{id}": {
+            "get": {
+                "tags": [
+                    "Kategori"
+                ],
+                "summary": "Get Kategori by ID",
+                "description": "Retrieve specific kategori by its ID",
+                "operationId": "kategoriSingle",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the Kategori",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Kategori not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Kategori"
+                ],
+                "summary": "Update Kategori",
+                "description": "Update kategori by its ID",
+                "operationId": "kategoriUpdate",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the Kategori",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nama_kategori"
+                                ],
+                                "properties": {
+                                    "nama_kategori": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Kategori successfully updated"
+                    },
+                    "404": {
+                        "description": "Kategori not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Kategori"
+                ],
+                "summary": "Delete Kategori",
+                "description": "Delete kategori by its ID",
+                "operationId": "kategoriDelete",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the Kategori",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Kategori successfully deleted"
+                    },
+                    "404": {
+                        "description": "Kategori not found"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Auth"
+        },
+        {
+            "name": "Barang",
+            "description": "Barang"
+        },
+        {
+            "name": "Kategori",
+            "description": "Kategori"
+        }
+    ]
+}
