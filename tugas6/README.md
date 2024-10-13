@@ -1,8 +1,8 @@
 # Project Tugas 6
 
-Selamat datang di **Project Tugas 6**! 🎉
+Selamat datang di **Project Tugas 6**! 🚀
 
-Untuk melihat dan mengedit folder khusus untuk Tugas 6, silakan beralih ke branch **tugas5** dengan mengikuti langkah-langkah berikut:
+Untuk melihat dan mengedit folder khusus untuk Tugas 6, silakan beralih ke branch **tugas6** dengan mengikuti langkah-langkah berikut:
 
 ### 1. Clone Repository
 
