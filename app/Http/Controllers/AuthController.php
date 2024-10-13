@@ -55,6 +55,7 @@ class AuthController extends Controller
 		$request->session()->regenerate();
 
 		return redirect()->route('dashboard');
+
 	}
 
 	public function logout(Request $request)
@@ -63,6 +64,6 @@ class AuthController extends Controller
 
 		$request->session()->invalidate();
 
-		return redirect('/');
+		return redirect('/home');
 	}
 }

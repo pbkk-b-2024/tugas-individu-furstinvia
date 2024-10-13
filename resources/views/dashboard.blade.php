@@ -5,7 +5,7 @@
 @section('contents')
 
 <div class="container-fluid mb-4">
-  <div class="card shadow-sm p-4">
+  <div class="card shadow-sm p-4 gradient-card">
       <h3 class="mb-3">Selamat Datang, {{ auth()->user()->nama }}! 🌟</h3>
       <p class="lead">Eksklusif untuk Anda: Produk-produk pilihan dengan promo istimewa! 🎁 Temukan apa yang cocok untuk Anda</p>
       <ul>

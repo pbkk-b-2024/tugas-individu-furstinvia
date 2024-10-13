@@ -15,85 +15,86 @@
   <li class="nav-item">
     <a class="nav-link" href="{{ route('dashboard') }}">
       <i class="fas fa-fw fa-home"></i>
-      <span>Dashboard </span></a>
+      <span><b>Dashboard</b> </span></a>
   </li>
 
-    <!-- Swagger Documentation Link -->
-  <li class="nav-item">
-    <a class="nav-link" href="http://127.0.0.1:8000/api/documentation">
-      <i class="fas fa-fw fa-book"></i>
-      <span>API Documentation</span></a>
-  </li>
+ 
 
       <!-- Link Users hanya untuk Admin -->
     @if (auth()->user()->level == 'Admin')
     <li class="nav-item">
         <a class="nav-link" href="{{ route('users.index') }}">
             <i class="fas fa-fw fa-users"></i>
-            <span>Users</span></a>
+            <span><b>Users</b></span></a>
     </li>
     @endif
 
-    <li class="nav-item">
-      <a class="nav-link" href="{{ route('media.index') }}">
-         <i class="fas fa-fw fa-file-upload"></i>
-         <span>Upload Media</span>
-      </a>
-   </li>
    
-
   <li class="nav-item">
     <a class="nav-link" href="{{ route('barang') }}">
       <i class="fas fa-fw fa-couch"></i>
-      <span>Products</span></a>
+      <span><b>Products</b></span></a>
   </li>
 
     @if (auth()->user()->level == 'Admin')
   <li class="nav-item">
     <a class="nav-link" href="{{ route('kategori') }}">
       <i class="fas fa-fw fa-tags"></i>
-      <span>Categories </span></a>
+      <span><b>Categories</b> </span></a>
   </li>
     @endif
 
 
   <!-- Additional Tables -->
   <li class="nav-item">
-    <a class="nav-link" href="#">
+    <a class="nav-link" href="{{ route('orders.index') }}">
       <i class="fas fa-fw fa-clipboard-list"></i>
-      <span>Orders</span></a>
+      <span><b>Orders</b></span></a>
   </li>
 
   <li class="nav-item">
-    <a class="nav-link" href="#">
+    <a class="nav-link" href="{{ route('memberships.index') }}">
       <i class="fas fa-fw fa-file-alt"></i>
-      <span>Order Details</span></a>
+      <span><b>Membership</b></span></a>
   </li>
 
   <li class="nav-item">
-    <a class="nav-link" href="#">
+    <a class="nav-link" href="{{ route('payments.index') }}">
       <i class="fas fa-fw fa-credit-card"></i>
-      <span>Payments</span></a>
+      <span><b>Payments</b></span></a>
   </li>
 
   <li class="nav-item">
-    <a class="nav-link" href="#">
+    <a class="nav-link" href="{{ route('returns.index') }}">
       <i class="fas fa-fw fa-user"></i>
-      <span>Customers</span></a>
+      <span><b>Returns</b></span></a>
   </li>
 
   <li class="nav-item">
-    <a class="nav-link" href="#">
+    <a class="nav-link" href="{{ route('shippings.index') }}">
       <i class="fas fa-fw fa-shipping-fast"></i>
-      <span>Shipping</span></a>
+      <span><b>Shipping</b></span></a>
   </li>
 
   <li class="nav-item">
-    <a class="nav-link" href="#">
+    <a class="nav-link" href="{{ route('suppliers.index') }}">
       <i class="fas fa-fw fa-industry"></i>
-      <span>Suppliers</span></a>
+      <span><b>Suppliers</b></span></a>
   </li>
 
+     <!-- Swagger Documentation Link -->
+     <li class="nav-item">
+      <a class="nav-link" href="http://127.0.0.1:8000/api/documentation">
+        <i class="fas fa-fw fa-book"></i>
+        <span><b>API Documentation</b></span></a>
+    </li>
+
+  <li class="nav-item">
+    <a class="nav-link" href="{{ route('media.index') }}">
+       <i class="fas fa-fw fa-file-upload"></i>
+       <span><b>Upload Media</b></span>
+    </a>
+ </li>
 
 
   <!-- Divider -->

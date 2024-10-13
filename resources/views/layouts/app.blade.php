@@ -11,6 +11,9 @@
 
   <title>Furstin Dashboard</title>
 
+  <!-- Font Montserrat dari Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
   <!-- Custom fonts for this template-->
   <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -18,6 +21,31 @@
   <!-- Custom styles for this template-->
   <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
   <style>
+
+     /* Terapkan font Montserrat ke seluruh halaman */
+     body {
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    /* Contoh penerapan ke elemen lain */
+    h1, h2, h3, h4, h5, h6, p, a {
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .gradient-card {
+    background: linear-gradient(135deg, #30529D, #619eee) !important; /* Gradient dari biru tua ke biru lebih terang */
+    color: #ffffff !important; /* Warna teks putih */
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  .gradient-card h3 {
+    color: #ffcc00 !important; /* Warna teks kuning */
+  }
+
+  .gradient-card p, .gradient-card ul li {
+    color: #ffffff !important; /* Warna teks putih */
+  }
     .category-item {
     margin-bottom: 20px;
 }
@@ -375,7 +403,40 @@ button[type="submit"]:hover {
     color: #333;
 }
 
+/* Style untuk wishlist modal */
+.modal-content {
+    border-radius: 10px;
+}
+.modal-header {
+    background-color: #f8f9fa;
+}
+.modal-footer {
+    background-color: #f8f9fa;
+}
 
+.btn-custom-logout, .btn-home {
+            background: linear-gradient(45deg, #30529D, #090c10); /* Gradasi dari biru tua ke biru muda */
+            color: #ffffff; /* Warna icon putih */
+            border: none;
+            padding: 12px;
+            border-radius: 50%; /* Membuat tombol bulat */
+            font-size: 20px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            cursor: pointer;
+            text-decoration: none;
+            width: 50px; /* Ukuran tombol */
+            height: 50px; /* Ukuran tombol */
+        }
+
+        /* Hover effect */
+        .btn-custom-logout:hover, .btn-home:hover {
+            background: linear-gradient(45deg, #1f3b6d, #30529D); /* Lebih gelap saat hover */
+            transform: translateY(-5px); /* Efek naik saat hover */
+        }
 
 
   </style>
@@ -423,6 +484,68 @@ button[type="submit"]:hover {
       @include('layouts.footer')
       <!-- End of Footer -->
 
+      <!-- Modal Wishlist -->
+<div class="modal fade" id="wishlistModal" tabindex="-1" aria-labelledby="wishlistModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="wishlistModalLabel">Your Wishlist</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Daftar wishlist -->
+                <ul class="list-group" id="wishlistItems">
+                    <!-- Item wishlist akan ditambahkan di sini -->
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Keranjang -->
+<div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cartModalLabel">Your Cart</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cartItems">
+                            <!-- Item keranjang akan ditambahkan di sini -->
+                        </tbody>
+                    </table>
+                </div>
+                <h5 class="mt-4">Total: <span id="totalAmount">$0.00</span></h5>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Checkout</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
     </div>
     <!-- End of Content Wrapper -->
 
@@ -446,6 +569,12 @@ button[type="submit"]:hover {
 
   <!-- Page level plugins -->
   <script src="{{ asset('vendor/chart.js/Chart.min.js') }}"></script>
+
+  <!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<!-- Bootstrap Bundle JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
 
   <script>
     const toggleButton = document.getElementById('darkModeToggle');
@@ -472,8 +601,55 @@ button[type="submit"]:hover {
     });
 
   </script>
+
+  <script>
+    // Contoh data wishlist
+const wishlist = [
+    { name: "Product 1", price: "$10" },
+    { name: "Product 2", price: "$20" },
+    { name: "Product 3", price: "$30" }
+];
+
+// Mengisi wishlist modal dengan item
+const wishlistItems = document.getElementById('wishlistItems');
+wishlist.forEach(item => {
+    const listItem = document.createElement('li');
+    listItem.className = "list-group-item d-flex justify-content-between align-items-center";
+    listItem.textContent = `${item.name} - ${item.price}`;
+    wishlistItems.appendChild(listItem);
+});
+  </script>
   
-  
+  <script>
+    // Contoh data keranjang belanja
+    const cart = [
+        { name: "BILLY Bookcase", price: "$79.99", quantity: 1 },
+        { name: "MALM Bed", price: "$299.00", quantity: 1 },
+        { name: "KALLAX Shelf Unit", price: "$149.00", quantity: 2 }
+    ];
+
+    // Mengisi keranjang modal dengan item
+    const cartItems = document.getElementById('cartItems');
+    let totalAmount = 0;
+
+    cart.forEach(item => {
+        const total = parseFloat(item.price.slice(1)) * item.quantity;
+        totalAmount += total;
+
+        const listItem = document.createElement('tr');
+        listItem.innerHTML = `
+            <td>${item.name}</td>
+            <td>${item.price}</td>
+            <td>${item.quantity}</td>
+            <td>$${total.toFixed(2)}</td>
+            <td><button class="btn btn-danger btn-sm">Remove</button></td>
+        `;
+        cartItems.appendChild(listItem);
+    });
+
+    // Menampilkan total amount
+    document.getElementById('totalAmount').textContent = `$${totalAmount.toFixed(2)}`;
+</script>
   
   
   

@@ -159,27 +159,31 @@
       </div>
     </li>
  --}}
-    <!-- Icon Love -->
-    <li class="nav-item">
-      <a class="nav-link" href="#">
-        <i class="fas fa-heart fa-lg"></i>
-      </a>
-    </li>
+<!-- Icon Love -->
+<li class="nav-item">
+  <a class="btn btn-home" href="#" data-toggle="modal" data-target="#wishlistModal">
+      <i class="fas fa-heart fa-lg"></i>
+  </a>
+</li>
 
     <!-- Icon Keranjang -->
-    <li class="nav-item">
-      <a class="nav-link" href="#">
-        <i class="fas fa-shopping-cart fa-lg"></i>
-      </a>
-    </li>
-    <!-- Tombol Dark Mode -->
-    <!-- Tombol Dark Mode -->
-    <li class="nav-item">
-      <button id="darkModeToggle" class="btn btn-dark ml-auto">
-          <i class="fas fa-moon"></i> <!-- Ikon bulan -->
-      </button>
-    </li>
+<li class="nav-item">
+  <a class="btn btn-home" href="#" data-toggle="modal" data-target="#cartModal">
+    <i class="fas fa-shopping-cart fa-lg"></i>
+  </a>
+</li>
 
+   
+
+    <a class="btn btn-home" href="{{ url('/home') }}">
+      <i class="fas fa-home"></i> <!-- Icon Home -->
+    </a>
+  
+    <a class="btn btn-custom-logout" href="{{ route('logout') }}">
+      <i class="fas fa-sign-out-alt"></i>
+  </a>
+  
+  
 
     <!-- Nav Item - User Information -->
     <li class="nav-item dropdown no-arrow">
@@ -214,5 +218,7 @@
     </li>
 
   </ul>
+
+ 
 
 </nav>

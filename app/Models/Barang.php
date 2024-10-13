@@ -17,4 +17,9 @@ class Barang extends Model
 	{
 		return $this->belongsTo(Kategori::class, 'id_kategori');
 	}
+
+	public function returns()
+    {
+        return $this->hasMany(ProductReturn::class, 'product_id'); // Menghubungkan dengan model ProductReturn
+    }
 }
